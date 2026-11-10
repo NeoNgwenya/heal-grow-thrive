@@ -242,6 +242,49 @@ p { line-height: 1.75; }
 .event-facts dd span { display: block; color: var(--muted); font-size: 0.84rem; font-weight: 550; }
 .event-location { margin-top: 10px; color: var(--tone-ink); }
 .event-description { margin-bottom: 9px; }
+.event-shortcut { padding-top: 15px; }
+.upcoming-events { padding-top: 25px; }
+.launch-feature { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(22px, 5vw, 62px); }
+.launch-cover { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); }
+.launch-feature h2 { margin-block: 10px 12px; }
+.launch-feature p:not(.eyebrow) { max-width: 43ch; color: var(--muted); }
+.launch-feature .action { margin-top: 17px; }
+.launch-gallery { padding-top: 28px; container-type: inline-size; }
+.gallery-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.gallery-heading p { color: var(--muted); font-size: 0.85rem; font-weight: 750; }
+.photo-grid {
+  --photo-columns: 4;
+  --photo-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(var(--photo-columns), minmax(0, 1fr));
+  gap: var(--photo-gap);
+  padding: 0;
+  list-style: none;
+}
+.photo-thumbnail { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: #f4e8e3; }
+.photo-thumbnail img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; transition: scale 220ms var(--ease-out); }
+.photo-grid > :first-child img { object-position: 60% 38%; }
+.photo-grid [data-tile="wide"] img { object-position: center 48%; }
+
+@supports (width: 1cqw) {
+  .photo-grid {
+    grid-auto-rows: calc((100cqw - (var(--photo-columns) - 1) * var(--photo-gap)) / var(--photo-columns));
+  }
+  .photo-grid [data-tile="feature"], .photo-grid [data-tile="wide"] { grid-column: span 2; }
+  .photo-grid [data-tile="feature"], .photo-grid [data-tile="tall"] { grid-row: span 2; }
+  .photo-thumbnail { height: 100%; aspect-ratio: auto; }
+}
+
+.photo-thumbnail > span { position: absolute; bottom: 7px; right: 7px; display: grid; place-items: center; width: 29px; height: 29px; border-radius: 50%; background: var(--paper); color: var(--plum); }
+.photo-viewer { width: min(100% - 24px, 920px); max-height: calc(100dvh - 24px); padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); }
+.photo-viewer::backdrop { background: #2b1524d6; }
+html:has(.photo-viewer[open]) { overflow: hidden; }
+.photo-full { width: 100%; height: min(65dvh, 650px); border-radius: 6px; background: #251b23; object-fit: contain; }
+.photo-viewer button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); color: var(--plum); }
+.photo-viewer button:hover { background: #f7e7e8; }
+.photo-close { margin: 0 0 8px auto; }
+.photo-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.photo-controls p { font-size: 0.86rem; font-weight: 800; }
 .values-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; }
 .values-grid div { padding-block: 19px; border-top: 1px solid var(--line); }
 .values-grid dt { font: 520 1.45rem var(--serif); }
@@ -305,6 +348,7 @@ p { line-height: 1.75; }
 @media (hover: hover) {
   .pillar-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px #35242d12; }
   .product-preview:hover img { transform: translateY(-4px) rotate(-2deg); }
+  .photo-thumbnail:hover img { scale: 1.04; }
 }
 
 @media (max-width: 960px) {
@@ -320,6 +364,9 @@ p { line-height: 1.75; }
 @media (max-width: 720px) {
   .shell { width: calc(100% - 38px); }
   .section { padding-block: 51px; }
+  .upcoming-events, .launch-gallery { padding-top: 20px; }
+  .launch-feature { grid-template-columns: 1fr; }
+  .photo-grid { --photo-columns: 2; --photo-gap: 8px; }
   .announcement { gap: 8px; letter-spacing: 0.14em; }
   .header-inner { min-height: 65px; }
   .brand img { width: 43px; height: 43px; }
@@ -422,4 +469,5 @@ p { line-height: 1.75; }
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
   .action:active, .pillar-card:active, .product-preview:active { scale: none; }
   .pillar-card:hover, .product-preview:hover img { transform: none; }
+  .photo-thumbnail:hover img { scale: none; }
 }

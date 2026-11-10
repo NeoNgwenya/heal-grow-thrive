@@ -1,21 +1,28 @@
 import type { Metadata } from "next";
-import { Lightbulb, MapPin } from "lucide-react";
+import Image from "next/image";
+import { ArrowDown, Images, Lightbulb, MapPin } from "lucide-react";
 import { ActionLink, PageIntro } from "../../components/ui";
+import { ukBookLaunch } from "../../lib/uk-book-launch";
 
 export const metadata: Metadata = {
   title: "Events",
-  description: "Explore the Surviving Loss gathering in Bulawayo, the South Africa tour and Thrive & Trade Thursdays.",
+  description: "Find upcoming gatherings and revisit Awande Mkwananzi’s UK book launch in photos.",
 };
 
 const survivingLossUrl = "https://survivingloss.co.zw/";
 
 export default function Events() {
+  const [cover] = ukBookLaunch.photos;
+
   return (
     <>
       <PageIntro eyebrow="Gather with us" description="Make time to learn, share ideas and meet people taking their own next steps." tone="thrive">
-        Upcoming <em>events.</em>
+        Events &amp; <em>highlights.</em>
       </PageIntro>
-      <section className="section shell info-grid" aria-label="Event listings">
+      <div className="shell event-shortcut">
+        <a className="action action--text" href="#uk-book-launch"><Images size={17} aria-hidden /> UK Book Launch photos <ArrowDown size={15} aria-hidden /></a>
+      </div>
+      <section className="section shell info-grid upcoming-events" aria-label="Upcoming events">
         <article className="info-card tone-heal event-feature" id="surviving-loss-bulawayo" data-reveal="">
           <p className="eyebrow"><span /> Bulawayo, Zimbabwe</p>
           <h2>Surviving Loss <em>From Loss to Life Again</em></h2>
@@ -52,6 +59,17 @@ export default function Events() {
           <p>An initiative for sharing business ideas, discovering what others are building and finding people to collaborate with.</p>
           <ActionLink href="/contact?topic=events" variant="text">Ask about Thrive &amp; Trade</ActionLink>
         </article>
+      </section>
+      <section className="section section--tinted" id="uk-book-launch" aria-labelledby="launch-heading">
+        <div className="shell launch-feature" data-reveal="">
+          <Image className="launch-cover" src={cover.image} alt={cover.alt} sizes="(max-width: 720px) 94vw, 580px" />
+          <div>
+            <p className="eyebrow"><span /> Past event · <time dateTime={ukBookLaunch.date}>{ukBookLaunch.dateLabel}</time></p>
+            <h2 id="launch-heading">{ukBookLaunch.title}</h2>
+            <p>See moments from the UK launch of Awande Mkwananzi’s <cite>Surviving Loss: Held by Grace</cite>, from book signings to photos with guests.</p>
+            <ActionLink href={ukBookLaunch.href}>View all {ukBookLaunch.photos.length} photos</ActionLink>
+          </div>
+        </div>
       </section>
     </>
   );
